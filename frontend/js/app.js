@@ -101,6 +101,7 @@ async function loadFullData(fileId) {
         
         // Afficher la table avec pagination
         document.getElementById("table-container").hidden = false;
+        updateTotalClientsKpi(data);
         updateRiskKpi(data);
         tableViewer.displayData({
             headers: data.headers,
@@ -109,6 +110,16 @@ async function loadFullData(fileId) {
     } catch (error) {
         showMessage("Erreur lors du chargement des données: " + error.message, "error");
     }
+}
+
+function updateTotalClientsKpi(data) {
+    const kpiBar = document.getElementById("kpi-bar");
+    const kpiTotal = document.getElementById("kpi-total-count");
+    if (!kpiBar || !kpiTotal) return;
+
+    const rows = Array.isArray(data.rows) ? data.rows : [];
+    kpiTotal.textContent = String(rows.length);
+    kpiBar.hidden = false;
 }
 
 function updateRiskKpi(data) {
