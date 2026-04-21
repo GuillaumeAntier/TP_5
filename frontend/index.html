@@ -25,6 +25,14 @@
     <div id="table-container" class="table-wrapper" hidden>
       <h2>Données complètes</h2>
       
+      <!-- Barre de filtrage -->
+      <div class="filter-bar" id="filter-bar" hidden>
+        <label for="segment-filter">Filtrer par segment :</label>
+        <select id="segment-filter">
+          <option value="">Tous les segments</option>
+        </select>
+      </div>
+
       <div id="kpi-bar" class="kpi-bar" hidden>
         <div class="kpi-card kpi-total" role="status" aria-live="polite">
           <div class="kpi-title">Total clients</div>
