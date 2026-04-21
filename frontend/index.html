@@ -6,6 +6,7 @@
   <title>CSV Viewer</title>
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/table.css">
+  <link rel="stylesheet" href="css/kpi.css">
 </head>
 <body>
   <div class="container">
@@ -42,7 +43,19 @@
     </div>
   </div>
 
+  <div id="kpi-container" class="kpi-wrapper">
+    <div class="kpi-card">
+        <h3 class="kpi-label">Chiffre d'affaires total</h3>
+        <div id="total-revenue" class="kpi-value">0,00 €</div>
+        <p class="kpi-currency">EUR</p>
+    </div>
+  </div>
+
+  <!-- À ajouter dans index.html -->
+  <a href="admin-login.html" class="admin-link">Admin</a>
+
   <script src="js/table.js"></script>
   <script src="js/app.js"></script>
+  <script src="js/kpi.js"></script>
 </body>
 </html>
