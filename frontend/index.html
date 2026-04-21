@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Import CSV</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Import de fichier CSV</h1>
+
+        <div class="upload-zone" id="uploadZone">
+            <div class="upload-icon">📁</div>
+            <p>Glissez-déposez votre fichier ici ou</p>
+            <label for="fileInput" class="btn-select">Sélectionner un fichier</label>
+            <input type="file" id="fileInput" accept=".csv" hidden>
+            <p class="format-info">Formats acceptés : .csv (encodage UTF-8)</p>
+        </div>
+
+        <div id="fileName" class="file-name" hidden></div>
+        <button id="uploadBtn" class="btn-upload" hidden>Importer</button>
+
+        <div id="message" class="message" hidden></div>
+
+        <div id="previewSection" class="preview-section" hidden>
+            <h2>Aperçu des données</h2>
+            <p id="rowCount"></p>
+            <div class="table-wrapper">
+                <table id="previewTable">
+                    <thead id="previewHead"></thead>
+                    <tbody id="previewBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
