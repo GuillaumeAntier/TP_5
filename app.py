@@ -22,7 +22,7 @@ def upload_csv():
         return jsonify({"error": "Aucun fichier envoyé"}), 400
 
     file = request.files["file"]
-
+# 1. Vérifie qu'un fichier a bien été envoyé dans la requête
     if file.filename == "":
         return jsonify({"error": "Aucun fichier sélectionné"}), 400
 
@@ -31,12 +31,17 @@ def upload_csv():
 
     try:
         content = file.read().decode("utf-8")
+        if not content.strip():
+            return jsonify({"error": "Le fichier est vide. Il doit contenir au moins une ligne de données."}), 400
     except UnicodeDecodeError:
         return jsonify({"error": "Encodage non supporté. Le fichier doit être en UTF-8"}), 400
 
     reader = csv.DictReader(io.StringIO(content))
     rows = list(reader)
     headers = reader.fieldnames or []
+
+    if not rows:
+        return jsonify({"error": "Le fichier contient des colonnes mais aucune donnée exploitable."}), 400
 
     file_id = file.filename
     csv_storage[file_id] = {"headers": headers, "rows": rows, "row_count": len(rows)}
