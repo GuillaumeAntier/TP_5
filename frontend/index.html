@@ -1,40 +1,48 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Import CSV</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSV Viewer</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/table.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Import de fichier CSV</h1>
-
-        <div class="upload-zone" id="uploadZone">
-            <div class="upload-icon">📁</div>
-            <p>Glissez-déposez votre fichier ici ou</p>
-            <label for="fileInput" class="btn-select">Sélectionner un fichier</label>
-            <input type="file" id="fileInput" accept=".csv" hidden>
-            <p class="format-info">Formats acceptés : .csv (encodage UTF-8)</p>
-        </div>
-
-        <div id="fileName" class="file-name" hidden></div>
-        <button id="uploadBtn" class="btn-upload" hidden>Importer</button>
-
-        <div id="message" class="message" hidden></div>
-
-        <div id="previewSection" class="preview-section" hidden>
-            <h2>Aperçu des données</h2>
-            <p id="rowCount"></p>
-            <div class="table-wrapper">
-                <table id="previewTable">
-                    <thead id="previewHead"></thead>
-                    <tbody id="previewBody"></tbody>
-                </table>
-            </div>
-        </div>
+  <div class="container">
+    <h1>Importateur CSV</h1>
+    
+    <!-- Zone de téléchargement -->
+    <div id="uploadZone" class="upload-zone">
+      <p>Glissez-déposez un fichier CSV ici ou cliquez pour sélectionner</p>
+      <input type="file" id="fileInput" accept=".csv" hidden>
     </div>
+    
+    <div id="fileName" hidden></div>
+    <button id="uploadBtn" hidden>Importer</button>
+    <div id="message" hidden></div>
+    
+    <!-- Section table complète avec pagination -->
+    <div id="table-container" class="table-wrapper" hidden>
+      <h2>Données complètes</h2>
+      <div class="metadata">
+        <span id="row-count">Lignes: 0</span>
+        <span id="column-count">Colonnes: 0</span>
+      </div>
 
-    <script src="app.js"></script>
+      <table id="data-table" class="data-table">
+        <thead id="table-head"></thead>
+        <tbody id="table-body"></tbody>
+      </table>
+
+      <div class="pagination">
+        <button id="prev-btn" class="btn" disabled>← Précédent</button>
+        <span id="page-info">Page 1</span>
+        <button id="next-btn" class="btn" disabled>Suivant →</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/table.js"></script>
+  <script src="js/app.js"></script>
 </body>
 </html>

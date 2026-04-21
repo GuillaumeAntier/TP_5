@@ -3,10 +3,6 @@ const fileInput = document.getElementById("fileInput");
 const fileNameDiv = document.getElementById("fileName");
 const uploadBtn = document.getElementById("uploadBtn");
 const messageDiv = document.getElementById("message");
-const previewSection = document.getElementById("previewSection");
-const previewHead = document.getElementById("previewHead");
-const previewBody = document.getElementById("previewBody");
-const rowCount = document.getElementById("rowCount");
 
 let selectedFile = null;
 
@@ -32,6 +28,11 @@ fileInput.addEventListener("change", () => {
     if (fileInput.files[0]) handleFileSelect(fileInput.files[0]);
 });
 
+// Clic sur la zone pour ouvrir le sélecteur
+uploadZone.addEventListener("click", () => {
+    fileInput.click();
+});
+
 function handleFileSelect(file) {
     if (!file.name.endsWith(".csv")) {
         showMessage("Seuls les fichiers .csv sont acceptés.", "error");
@@ -43,7 +44,6 @@ function handleFileSelect(file) {
     fileNameDiv.hidden = false;
     uploadBtn.hidden = false;
     messageDiv.hidden = true;
-    previewSection.hidden = true;
 }
 
 function formatSize(bytes) {
@@ -53,7 +53,9 @@ function formatSize(bytes) {
 }
 
 // Upload
-uploadBtn.addEventListener("click", async () => {
+uploadBtn.addEventListener("click", uploadFile);
+
+async function uploadFile() {
     if (!selectedFile) return;
 
     uploadBtn.disabled = true;
@@ -76,33 +78,37 @@ uploadBtn.addEventListener("click", async () => {
         }
 
         showMessage(data.message, "success");
-        renderPreview(data.headers, data.preview, data.row_count);
+        
+        // Charger et afficher la table complète directement
+        loadFullData(data.file_id);
     } catch (err) {
         showMessage("Erreur de connexion au serveur.", "error");
     } finally {
         uploadBtn.disabled = false;
         uploadBtn.textContent = "Importer";
     }
-});
+}
+
+async function loadFullData(fileId) {
+    try {
+        const response = await fetch(`/api/data/${fileId}`);
+        const data = await response.json();
+        
+        // Afficher la table avec pagination
+        document.getElementById("table-container").hidden = false;
+        tableViewer.displayData({
+            headers: data.headers,
+            rows: data.rows,
+        });
+    } catch (error) {
+        showMessage("Erreur lors du chargement des données: " + error.message, "error");
+    }
+}
 
 function showMessage(text, type) {
     messageDiv.textContent = text;
     messageDiv.className = `message ${type}`;
     messageDiv.hidden = false;
-}
-
-function renderPreview(headers, rows, total) {
-    previewSection.hidden = false;
-    rowCount.textContent = `${total} ligne(s) au total — aperçu des 5 premières :`;
-
-    previewHead.innerHTML = "<tr>" + headers.map((h) => `<th>${escapeHtml(h)}</th>`).join("") + "</tr>";
-
-    previewBody.innerHTML = rows
-        .map(
-            (row) =>
-                "<tr>" + headers.map((h) => `<td>${escapeHtml(row[h] || "")}</td>`).join("") + "</tr>"
-        )
-        .join("");
 }
 
 function escapeHtml(text) {
