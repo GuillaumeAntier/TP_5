@@ -169,3 +169,91 @@ th {
 tr:hover {
     background-color: #f9f9fb;
 }
+
+/* À ajouter dans css/style.css */
+.admin-link {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  background: #2c3e50;
+  color: white;
+  padding: 8px 15px;
+  border-radius: 4px;
+  text-decoration: none;
+  font-size: 14px;
+  transition: background 0.3s;
+}
+
+.admin-link:hover {
+  background: #34495e;
+}
+
+.kpi-bar {
+  display: flex;
+  gap: 12px;
+  margin: 12px 0 16px;
+}
+
+.kpi-card {
+  flex: 0 0 auto;
+  min-width: 220px;
+  padding: 14px 16px;
+  border-radius: 10px;
+  background: #ffffff;
+  border: 1px solid #e6e8ee;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.kpi-total {
+  border-color: #b8daff;
+  background: #f0f7ff;
+}
+
+.kpi-total .kpi-title {
+  color: #1a3e5c;
+}
+
+.kpi-total .kpi-value {
+  color: #0056b3;
+}
+
+.kpi-alert {
+  border-color: #ffd2d2;
+  background: #fff5f5;
+}
+
+.kpi-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  font-weight: 700;
+  color: #7a1e1e;
+}
+
+.kpi-value {
+  margin-top: 8px;
+  font-size: 34px;
+  font-weight: 800;
+  color: #b00020;
+  line-height: 1;
+}
+
+.kpi-tooltip {
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  border: 1px solid #f1b3b3;
+  background: #ffffff;
+  color: #7a1e1e;
+  font-weight: 800;
+  cursor: help;
+  padding: 0;
+  line-height: 22px;
+  text-align: center;
+}
+
+.kpi-tooltip:focus {
+  outline: 2px solid #4a90d9;
+  outline-offset: 2px;
+}

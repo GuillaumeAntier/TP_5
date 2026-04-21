@@ -38,6 +38,11 @@ function handleFileSelect(file) {
         showMessage("Seuls les fichiers .csv sont acceptés.", "error");
         return;
     }
+    
+    if (file.size === 0) {
+        showMessage("Le fichier sélectionné est vide et ne peut pas être importé.", "error");
+        return;
+    }
 
     selectedFile = file;
     fileNameDiv.textContent = `Fichier sélectionné : ${file.name} (${formatSize(file.size)})`;
@@ -96,6 +101,8 @@ async function loadFullData(fileId) {
         
         // Afficher la table avec pagination
         document.getElementById("table-container").hidden = false;
+        updateTotalClientsKpi(data);
+        updateRiskKpi(data);
         tableViewer.displayData({
             headers: data.headers,
             rows: data.rows,
@@ -103,6 +110,49 @@ async function loadFullData(fileId) {
     } catch (error) {
         showMessage("Erreur lors du chargement des données: " + error.message, "error");
     }
+}
+
+function updateTotalClientsKpi(data) {
+    const kpiBar = document.getElementById("kpi-bar");
+    const kpiTotal = document.getElementById("kpi-total-count");
+    if (!kpiBar || !kpiTotal) return;
+
+    const rows = Array.isArray(data.rows) ? data.rows : [];
+    kpiTotal.textContent = String(rows.length);
+    kpiBar.hidden = false;
+}
+
+function updateRiskKpi(data) {
+    const kpiBar = document.getElementById("kpi-bar");
+    const kpiValue = document.getElementById("kpi-risk-count");
+    if (!kpiBar || !kpiValue) return;
+
+    const riskHeader = (data.headers || []).find(
+        (h) => normalizeText(h) === "risque_churn"
+    );
+    if (!riskHeader) {
+        kpiBar.hidden = true;
+        return;
+    }
+
+    const rows = Array.isArray(data.rows) ? data.rows : [];
+    const riskCount = rows.reduce((acc, row) => {
+        const raw = row?.[riskHeader];
+        const value = normalizeText(raw);
+        const isHigh = value === "eleve" || value === "élevé";
+        return acc + (isHigh ? 1 : 0);
+    }, 0);
+
+    kpiValue.textContent = String(riskCount);
+    kpiBar.hidden = false;
+}
+
+function normalizeText(input) {
+    return String(input ?? "")
+        .trim()
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "");
 }
 
 function showMessage(text, type) {

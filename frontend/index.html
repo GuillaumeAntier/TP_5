@@ -25,6 +25,29 @@
     <!-- Section table complète avec pagination -->
     <div id="table-container" class="table-wrapper" hidden>
       <h2>Données complètes</h2>
+      
+      <div id="kpi-bar" class="kpi-bar" hidden>
+        <div class="kpi-card kpi-total" role="status" aria-live="polite">
+          <div class="kpi-title">Total clients</div>
+          <div id="kpi-total-count" class="kpi-value">0</div>
+        </div>
+
+        <div class="kpi-card kpi-alert" role="status" aria-live="polite">
+          <div class="kpi-title">
+            Clients à risque
+            <button
+              type="button"
+              class="kpi-tooltip"
+              aria-label="Critère : un client est à risque si la colonne risque_churn vaut Élevé"
+              title="Critère : un client est à risque si la colonne risque_churn vaut Élevé (insensible à la casse)."
+            >
+              ?
+            </button>
+          </div>
+          <div id="kpi-risk-count" class="kpi-value">0</div>
+        </div>
+      </div>
+
       <div class="metadata">
         <span id="row-count">Lignes: 0</span>
         <span id="column-count">Colonnes: 0</span>
