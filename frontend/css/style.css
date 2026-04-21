@@ -204,6 +204,19 @@ tr:hover {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 }
 
+.kpi-total {
+  border-color: #b8daff;
+  background: #f0f7ff;
+}
+
+.kpi-total .kpi-title {
+  color: #1a3e5c;
+}
+
+.kpi-total .kpi-value {
+  color: #0056b3;
+}
+
 .kpi-alert {
   border-color: #ffd2d2;
   background: #fff5f5;
