@@ -38,6 +38,11 @@ function handleFileSelect(file) {
         showMessage("Seuls les fichiers .csv sont acceptés.", "error");
         return;
     }
+    
+    if (file.size === 0) {
+        showMessage("Le fichier sélectionné est vide et ne peut pas être importé.", "error");
+        return;
+    }
 
     selectedFile = file;
     fileNameDiv.textContent = `Fichier sélectionné : ${file.name} (${formatSize(file.size)})`;
